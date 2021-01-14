@@ -1,0 +1,951 @@
+package Chanda;
+
+import Core_Java.Excel_Reusable;
+import com.lowagie.text.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.sikuli.script.Screen;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.FindFailed;
+import seleniumprogramms.ReusableSeleniumScript;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+
+//import org.sikuli.script.support;
+import java.awt.Robot;
+//import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+public class HomeWork extends ReusableSeleniumScript {
+    // List of Home Works. (try to add logic to parameterize home-works...).
+    void navigationCommands (){
+        System.out.println("Assignment 'Navigation Commands' is started from this point");
+        ChromeDriver driver=new ChromeDriver();
+        driver.manage().window().maximize(); // maximizing the browser/window
+        driver.get("https://www.bgsbuniversity.org/");
+        // clicking on all links
+        driver.findElement(By.linkText("Admission")).click();
+        String curl = driver.getCurrentUrl();
+        driver.findElement(By.linkText("Result")).click();
+        driver.findElement(By.linkText("Syllabus")).click();
+        driver.findElement(By.linkText("Merit List")).click();
+        driver.findElement(By.linkText("Date Sheet")).click();
+        // Navigation commands
+        driver.navigate().back();  // click on back button
+        driver.navigate().forward();  // click on forward button
+        driver.get(curl);  // navigating to Admissions page
+        driver.findElement(By.linkText("1")).sendKeys(Keys.F5);  // refreshing page
+        driver.navigate().refresh();
+        driver.navigate().to(curl);
+        driver.close();
+        System.out.println("Assignment 'Navigation Commands' is done");
+        System.out.println();
+    }
+    void verificationIfExists() throws InterruptedException {
+        System.out.println("Assignment 'Verification If Exists (isDisplayed / isEnabled / isSelected' is started from this point");
+        ChromeDriver driver=new ChromeDriver();
+        driver.manage().window().maximize(); // maximizing the browser/window
+        driver.get("https://www.bing.com/");
+        Thread.sleep(3000);
+        // verifying if the Logo is displayed
+        boolean  status=driver.findElement(By.id("bLogo")).isDisplayed();
+        if(status==true){
+            System.out.println("Logo is present");
+        }
+        else{
+            System.out.println("Logo not present");
+        }
+        // verifying if Search-box is enabled
+        boolean searchboxEnabled=driver.findElement(By.id("sb_form_q")).isEnabled();
+        if(status==true){
+            System.out.println("The Search-box is enabled");
+            driver.findElement(By.id("sb_form_q")).sendKeys("best wishes to grandma");
+        }
+        else{
+            System.out.println("The Search-box is disabled");
+        }
+        // verifying if Radio-button is Set ON
+        driver.findElement(By.id("id_sc")).click();
+        Thread.sleep(1500);
+        driver.findElement(By.id("hbsettings")).click();
+        Thread.sleep(1500);
+        driver.findElement(By.linkText("More")).click();
+        boolean radioButton1=driver.findElement(By.id("adlt_set_strict")).isSelected();
+        if(radioButton1==true){
+            System.out.println("The radio-button is selected");
+        }
+        else{
+            driver.findElement(By.id("adlt_set_strict")).click();
+            System.out.println("I just set 1st radio-button ON");
+            Thread.sleep(3000);
+        }
+        driver.close();
+        System.out.println("Assignment 'Verification If Exists (isDisplayed / isEnabled / isSelected' is done");
+        System.out.println();
+    }
+    void launchApplicationAndEnterAllFields(){
+        System.out.println("Assignment 'LaunchApplicationAndEnterAllFields' is started from this point");
+        ChromeDriver driver=new ChromeDriver();
+        driver.manage().window().maximize(); // maximizing the browser/window
+        driver.get("https://www.mortgagecalculator.org/");
+        System.out.println(driver.getTitle());
+        driver.findElement(By.id("homeval")).sendKeys("500000");
+        driver.findElement(By.id("downpayment")).sendKeys("20000");
+        //driver.findElement(By.id("loanamt")).sendKeys("480000");    // this is autogenerated number
+        driver.findElement(By.id("intrstsrate")).sendKeys("3.1");
+        driver.findElement(By.id("loanterm")).sendKeys("39");
+        driver.findElement(By.id("pptytax")).sendKeys("5700");
+        driver.findElement(By.id("pmi")).sendKeys("0.2");
+        driver.findElement(By.id("hoi")).sendKeys("1999");
+        driver.findElement(By.id("hoa")).sendKeys("400");
+        driver.findElement(By.name("cal")).click();
+        driver.close();
+        System.out.println("Assignment 'LaunchApplicationAndEnterAllFields' is done");
+        System.out.println();
+    }
+    void scanner_Method(){
+        System.out.println("Assignment 'Scanner in-built methods nextLine() / nextInt() / NextFloat()' is started from this point");
+        Scanner sc = new Scanner(System.in);
+        String myString;
+        int myNum;
+        float myFloat;
+
+        // entering String
+        System.out.println("enter String/word");
+        myString = sc.nextLine();
+        System.out.println("My entered String/word is : "+ myString);
+
+        // entering number type int
+        System.out.println("enter num");
+        myNum = sc.nextInt();
+        System.out.println("My entered number is : "+ myNum);
+
+        // entering number type float
+        System.out.println("enter float num");
+        myFloat = sc.nextFloat();
+        System.out.println("My entered number is : "+ myFloat);
+        System.out.println("Assignment 'Scanner in-built methods nextLine() / nextInt() / NextFloat()' is done");
+        System.out.println();
+    }
+    void dropDowns() throws InterruptedException {
+        System.out.println("Assignment 'DropDowns' is starting from this point");
+        ChromeDriver driver=new ChromeDriver();
+        driver.manage().window().maximize(); // maximizing the browser/window
+        driver.get("https://candidate.psiexams.com/catalog/displayagencylicenses.jsp?catalogID=334");
+        Thread.sleep(3000);
+        Select sponsorname=new Select(driver.findElement(By.id("c0")));
+        sponsorname.selectByIndex(4);
+        sponsorname.selectByValue("736^-99");
+        sponsorname.selectByVisibleText("ATI TEAS");
+        System.out.println("Assignment 'DropdDowns' is done");
+        System.out.println();
+    }
+    void polymorphisz(){
+         class WebPageOverloading {
+            String abc, a, b;
+            int c, d, e;
+
+
+            void submit(String a, String b) {
+                abc = a + b;
+                System.out.println(abc);
+            }
+
+            void submit(String a, String b, int c, int d, int e) {
+                abc = a + b + c + d + e;
+                System.out.println(abc);
+            }
+
+            public void main(String[] args) {
+                System.out.println("Assignment ' Polymorfizs' is started from this point.");
+                WebPageOverloading obj1 = new WebPageOverloading();
+                obj1.submit("Name : Sirazh.  ", "Address : New York City.");
+
+                WebPageOverloading obj2 = new WebPageOverloading();
+                obj2.submit("Name : Sirazh.  ", "Address : New York City. ", 33, 5555555, 1234);
+                System.out.println("Assignment 'Polymorfism' is done");
+                System.out.println();
+            }  // main
+        }  // Core_Java.WebPageOverloading
+    }  //polymorphizm
+    void actionsDragDropResizeSortSelect() throws InterruptedException {
+        ChromeDriver driver=new ChromeDriver();
+        driver.manage().window().maximize(); // maximizing the browser/window
+        driver.get("https://jqueryui.com/");
+        Thread.sleep(3000);
+
+        //driver.switchTo().frame(0); // connecting to objects inside a frame on the screen
+        //driver.switchTo().frame("frame"); // when 'name="frame"' is available when inspecting so use name
+        //driver.switchTo().frame("demo-frame");  //
+
+        Actions action=new Actions(driver);  // using 'Actions' to perform any action like drag and drop / resize etc...
+
+        // Dragging and dropping object on UI
+        driver.findElement(By.linkText("Draggable")).click();
+        driver.switchTo().frame(0); // connecting to objects inside a frame on the screen
+        WebElement draggable=driver.findElement(By.id("draggable"));
+        action.dragAndDropBy(draggable,400, 13).perform();
+        System.out.println("Drag and drop action is performed.");
+        driver.switchTo().defaultContent();
+        Thread.sleep(3000);
+
+        // Dragging and dropping object to specified location.
+        driver.findElement(By.linkText("Droppable")).click();
+        driver.switchTo().frame(0); // connecting to objects inside a frame on the screen
+        WebElement droppable1=driver.findElement(By.id("draggable"));
+        WebElement droppable2=driver.findElement(By.id("droppable"));
+        action.dragAndDrop(droppable1,droppable2).perform();
+        System.out.println("Action Drag and drop object to specified location is done");
+        driver.switchTo().defaultContent();
+        Thread.sleep(1500);
+
+        // Resizing object
+        driver.findElement(By.linkText("Resizable")).click();
+        driver.switchTo().frame(0);
+        WebElement resizible=driver.findElement(By.xpath("//*[@id='resizable']/div[3]"));
+        action.dragAndDropBy(resizible,400,13).perform();
+        System.out.println("Action resize object is done");
+        driver.switchTo().defaultContent();
+        Thread.sleep(1500);
+
+        // Selecting objects on UI
+        driver.findElement(By.linkText("Selectable")).click();
+        driver.switchTo().frame(0);
+        WebElement selectible1=driver.findElement(By.xpath("//*[@id='selectable']/li[1]"));
+        action.clickAndHold(selectible1).perform();
+        WebElement selectible2=driver.findElement(By.xpath("//*[@id='selectable']/li[3]"));
+        action.clickAndHold(selectible2).perform();
+        System.out.println("Action Selectible is done");
+        driver.switchTo().defaultContent();
+        Thread.sleep(1500);
+
+        // Sortable objects
+        driver.findElement(By.linkText("Sortable")).click();
+        driver.switchTo().frame(0);
+        WebElement sortable=driver.findElement(By.xpath("//*[@id='sortable']/li[1]"));
+        action.dragAndDropBy(sortable,9,92).perform();
+        System.out.println("Action sortable is done");
+        driver.switchTo().defaultContent();
+        Thread.sleep(1500);
+
+        driver.close();  // closing application
+    }
+    void sikuliUpload_PrintScreen_Alerts() throws InterruptedException, AWTException, AWTException {
+        ChromeDriver driver=new ChromeDriver();
+        driver.manage().window().maximize(); // maximizing the browser/window
+        driver.get("https://www.seleniumeasy.com/test/");
+            Thread.sleep(1500);
+        driver.findElement(By.xpath("//*[@id='at-cv-lightbox-button-holder']/a[2]")).click(); // handling popup
+            Thread.sleep(1000);
+
+        // Clicking on 'Command+P' and printing the web-page.
+        Robot r=new Robot();
+        r.keyPress(KeyEvent.VK_META); // unable to simulate COMMAND key on Mac using Robot class
+        r.keyPress(KeyEvent.VK_R);
+        r.keyRelease(KeyEvent.VK_META);
+        r.keyRelease(KeyEvent.VK_R);
+
+        // handling List-box
+        driver.findElement(By.xpath("//*[@id='navbar-brand-centered']/ul[2]/li[3]/a")).click();
+        Thread.sleep(1200);
+        driver.findElement(By.xpath("//*[@id='navbar-brand-centered']/ul[2]/li[3]/ul/li[1]/a")).click();
+        Thread.sleep(500);
+        driver.findElement(By.xpath("//*[@id='listhead']/div[1]/div/input")).sendKeys("Morbi leo risus");
+        driver.findElement(By.xpath("//*[@id='listhead']/div[2]/div/a")).click();
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/button[2]")).click();
+        driver.findElement(By.xpath("//*[@id='listhead']/div[1]/div/input")).clear();
+        driver.findElement(By.xpath("//*[@id='listhead']/div[2]/div/a")).click();
+        driver.navigate().refresh();
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[3]/div/ul/li[3]")).click();
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[3]/div/ul/li[5]")).click();
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/button[1]")).click();
+        driver.navigate().refresh();
+        System.out.println("List-box task is done. ");
+
+        // handling Bootstrap Modals : Single Modal
+        driver.findElement(By.xpath("//*[@id='navbar-brand-centered']/ul[2]/li[2]")).click();
+        Thread.sleep(1200);
+        driver.findElement(By.xpath("//*[@id='navbar-brand-centered']/ul[2]/li[2]/ul/li[2]/a")).click();
+        Thread.sleep(500);
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div[1]/div/div/div[2]/a")).click();
+        driver.switchTo().activeElement();
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[@id='myModal0']/div/div/div[4]/a[1]")).click();
+        System.out.println("Single Modal task is done. ");
+
+        // handling Multi Modals
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div[2]/div/div/div[2]/a")).click(); // clicking on Launch Modal button
+        Thread.sleep(3000);
+        driver.switchTo().activeElement(); // switching to active element/Modal on the screen
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[@id='myModal']/div/div/div[3]/a")).click(); // opening 2nd Modal
+        Thread.sleep(3000);
+        driver.switchTo().activeElement();  // switching to active element/Modal on the screen
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[@id='myModal2']/div/div/div[6]/a[1]")).click(); // closing 2nd Modal
+        Thread.sleep(3000);
+        driver.switchTo().activeElement(); // switching to active element/Modal on the screen
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[@id='myModal']/div/div/div[4]/a[1]")).click(); // closing 1st Modal
+        System.out.println("Multi Modals task is done. ");
+
+        // Bootstrap Alerts : reading text from the screen.
+        driver.findElement(By.xpath("//*[@id='navbar-brand-centered']/ul[2]/li[2]/a")).click(); // clicking on Alerts & Modals dropdown.
+        Thread.sleep(1200);
+        driver.findElement(By.xpath("//*[@id='navbar-brand-centered']/ul[2]/li[2]/ul/li[1]/a")).click(); // clicking on Bootstrap Alerts in selection list-box
+        Thread.sleep(500);
+        driver.findElement(By.id("normal-btn-success")).click(); // clicking on Normal Success Message
+        Thread.sleep(500);
+        String textDisplayed = driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]")).getText(); // get displayed text and assign to variable
+        Thread.sleep(500);
+        System.out.println(textDisplayed); // print displayed text
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/button")).click(); // close displayed message
+
+        driver.close();
+    }
+    void primeNum1to100(){
+            int i =0;
+            int num =0;
+            //Empty String
+            String  primeNumbers = "";
+
+            for (i = 1; i <= 100; i++)
+            {
+                int counter=0;
+                for(num =i; num>=1; num--)
+                {
+                    if(i%num==0)
+                    {
+                        counter = counter + 1;
+                    }
+                }
+                if (counter ==2)
+                {
+                    //Appended the Prime number to the String
+                    primeNumbers = primeNumbers + i + " ";
+                }
+            }
+            System.out.println("Prime numbers from 1 to 100 are :");
+            System.out.println(primeNumbers);
+    }
+    void implicitExplicitWait(){
+        launchBrowser("chrome"); // implicit wait is included in this reusable method
+        openURL("https://www.google.com/");
+        // login to Gmail
+        click(By.id("gb_70"));
+        send_keys(By.id("identifierId"),"selenium.test.sirazh@gmail.com");
+        click(By.xpath("//*[@id='identifierNext']/div/button/div[2]"));
+        send_keys(By.name("password"),"enter password here");
+        click(By.xpath("//*[@id='passwordNext']/div/button/div[2]"));
+        click(By.xpath("//*[@id='gbw']/div/div/div[1]/div[1]/a")); // click on gmail button to display email page
+        // Compose new email
+        click(By.xpath("//*[@id=':3c']/div/div"));
+        // enter email , subject and message in body
+        send_keys(By.xpath("//*[@id=':9m']"),"this is simple text");
+        click(By.xpath("//*[@id=':7g']"));
+        send_keys(By.xpath("//*[@id=':8z']"),"sirazhutdin05@yahoo.com");
+        send_keys(By.id(":8h"),"Composing new email");
+        click(By.id(":87")); // click on Send button
+    }
+    void explicitWaitPractice(){
+        launchBrowser("chrome");
+        openURL("http://only-testing-blog.blogspot.com/2014/06/alert_6.html");
+        //Explicit wait: waiting until alert is displayed.
+        WebDriverWait wait=new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.alertIsPresent());
+
+        String text=driver.switchTo().alert().getText();
+        print(text);
+        if(text.contains("Unexpected Alert!!")){
+            print("Unexpected Alert!! is displayed");
+            driver.switchTo().alert().accept();
+        }
+    }
+    void bookFlightOnSpicejet() throws InterruptedException {
+        launchBrowser("chrome");
+        openURL("https://www.spicejet.com/");
+        // select departure City
+        click(By.id("ctl00_mainContent_ddl_originStation1_CTXT"));
+        List<WebElement> departureCity=driver.findElements(By.xpath("//*[@id='dropdownGroup1']/div/ul/li"));
+        for(int i=0;i<departureCity.size();i++){
+            String departureAirportName=departureCity.get(i).getText();
+            if(departureAirportName.equalsIgnoreCase("Delhi (DEL)")){
+                departureCity.get(i).click();
+            }
+        }
+        // select destination City
+        click(By.id("ctl00_mainContent_ddl_destinationStation1_CTXT")); // Destination city
+        List<WebElement> destination=driver.findElements(By.xpath("//*[@id='dropdownGroup1']/div/ul/li"));
+        for(int i=0;i<destination.size();i++) {
+            String airportName = destination.get(i).getText();
+            if (airportName.equalsIgnoreCase("Hyderabad (HYD)")) {
+                destination.get(i).click();
+                break;
+            }
+        }
+        // selecting month "April 2020" on date-picker
+        for(int i=0;i<=5;i++){
+            WebElement month=driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[1]/div/div"));
+            String displayedMonth=month.getText();
+            print(displayedMonth);
+            if(displayedMonth.equalsIgnoreCase("April 2021")){
+                print("it's April");
+                break;
+            }
+            driver.findElement(By.xpath("//*[@id='ui-datepicker-div']/div[2]/div/a/span")).click(); // click on next month button
+        }
+        // selecting date "20" on date-picker
+        List<WebElement> flightDate=driver.findElements(By.xpath("//*[@id='ui-datepicker-div']/div[1]/table/tbody/tr/td"));
+        for(int i=0;i<flightDate.size();i++){
+            String currentDate=flightDate.get(i).getText();
+            if(currentDate.equalsIgnoreCase("20")){
+                flightDate.get(i).click();
+                break;
+            }
+        }
+        // clicking on search flights button
+        click(By.id("ctl00_mainContent_btn_FindFlights"));
+/*        // choosing the flight
+        List<WebElement> choosingFlight=driver.findElements(By.xpath("//*[@id='availabilityTable0']/tbody/tr/td/div/div"));
+        for(int i=0;i<choosingFlight.size();i++){
+            String flightTime=choosingFlight.get(i).getText();
+            print(flightTime);
+        }*/
+    }
+    void autoSuggestion() throws InterruptedException {
+        launchBrowser("chrome");
+        openURL("https://www.bing.com/?toWww=1&redig=4DEBAA8C85304017A83EC7643E78FE91");
+        driver.navigate().refresh();
+        send_keys(By.xpath("//*[@id='sb_form_q']"),"selenium");
+       // waitTime(3000);
+        List<WebElement> list=driver.findElements(By.xpath("//*[@id='sa_ul']/li"));
+        for(int i=0;i<list.size();i++){
+            String curentItem=list.get(i).getText();
+            if(curentItem.equalsIgnoreCase("selenium ide")){
+                list.get(i).click();
+                break;
+            }
+        }
+    }
+    void changeWebpageScrnOnBingDotCom() throws InterruptedException {
+        launchBrowser("chrome");
+        openURL("https://www.bing.com/?toWww=1&redig=4DEBAA8C85304017A83EC7643E78FE91");
+        boolean leftArrowButton=driver.findElement(By.id("leftNav")).isEnabled();
+        System.out.println(leftArrowButton);
+        // 1st way using while loop
+        while(leftArrowButton){
+            click(By.id("leftNav"));
+            waitTime(1000);
+            }
+        // 2nd way using for loop
+/*        for(int i=0;i<100;i++){
+            if(leftArrowButton){
+                click(By.id("leftNav"));
+                waitTime(1000);
+            }else{
+                print("button is disabled");
+                break;
+            }
+        }*/
+    }
+    void web_table_practice(){
+        launchBrowser("chrome");
+        openURL("https://www.techlistic.com/p/demo-selenium-practice.html");
+        WebElement table_body=driver.findElement(By.xpath("//*[@id='post-body-5867683659713562481']/div/div[1]/table/tbody"));
+        List<WebElement> table_rows=table_body.findElements(By.tagName("tr"));
+        for(int row=0;row<table_rows.size();row++){
+            List<WebElement> table_columns=table_rows.get(row).findElements(By.tagName("td"));
+            for(int col=0;col<table_columns.size();col++){
+                String values=table_columns.get(col).getText();
+                print(values);
+            }
+            print("");
+        }
+    }
+    void multipleWindowPractice() throws InterruptedException {
+        launchBrowser("chrome");
+        openURL("https://www.flipkart.com/");
+        WebElement closeBtn=driver.findElement(By.xpath("/html/body/div[2]/div/div/button"));
+        if(closeBtn.isDisplayed()){
+            closeBtn.click();
+        }
+        WebElement electronics=driver.findElement(By.xpath("//*[@id='container']/div/div[2]/div/div/span[1]"));
+        Actions action=new Actions(driver);
+        action.moveToElement(electronics).perform(); // mouse hovering over Electronics dropdown
+        click(By.linkText("Samsung")); // clicking on Samsung
+        waitTime(3500);
+
+        String parent_window = driver.getWindowHandle();
+        //clicking on View All button for phones under 15K
+        List<WebElement> viewAllButtons=driver.findElements(By.xpath("//*[@id='container']/div/div[3]/div[3]/div/div/div[1]/div[2]/a"));
+      //  int aa=viewAllButtons.size();
+      //  System.out.println(aa);
+
+        List<WebElement> priceSections=driver.findElements(By.xpath("//*[@id='container']/div/div[3]/div[3]/div/div/div[1]/div[1]/h2"));
+      //  int ss=priceSections.size();
+      //  System.out.println(ss);
+
+        for(int i=0;i<priceSections.size();i++){
+            String curentPriceSection=priceSections.get(i).getText();
+            if(curentPriceSection.contains("Samsung Mobile under ₹15K")){
+                viewAllButtons.get(i).click();
+                break;
+            }
+        }
+
+        // selecting phone from 2nd page from pagination
+        List<WebElement> allPaginationPages=driver.findElements(By.xpath("//*[@id='container']/div/div[3]/div[2]/div/div[2]/div[26]/div/div/nav/a"));
+        int sd=allPaginationPages.size();
+        System.out.println("count of all pages in pagination is : "+sd);
+
+/*        List<WebElement> countMobilePhones=driver.findElements(By.xpath("//*[@id='container']/div/div[3]/div[2]/div/div[2]/div/div/div/div/a/div[2]/div[1]/div[1]"));
+        int as=countMobilePhones.size();
+        System.out.println(as);*/
+        outerloop: // this breaks nested loops when condition is met
+        for(int s=0;s<=allPaginationPages.size();s++){
+            System.out.println("iteration : "+s);
+            //String desiredMobileModel="Samsung Galaxy J7 Nxt (Gold, 32 GB)";
+            List<WebElement> countMobilePhones=driver.findElements(By.xpath("//*[@id='container']/div/div[3]/div[2]/div/div[2]/div/div/div/div/a/div[2]/div[1]/div[1]"));
+              int as=countMobilePhones.size();
+              System.out.println("number of Mobiles in current page : "+as);
+            for(int x=0;x<as;x++){
+                String mobilePhone=countMobilePhones.get(x).getText();
+                print(mobilePhone);
+                if(mobilePhone.contains("Samsung Galaxy A50s (Prism Crush Violet, 128 GB)")){
+                    countMobilePhones.get(x).click();
+                    break outerloop;
+                }
+            }
+            waitTime(5500);
+            print("clicking on Next button");
+            allPaginationPages.get(s).click();
+            print("clicked");
+        }
+
+        Set<String> child_windows=driver.getWindowHandles();
+        for(String window : child_windows){
+            System.out.println(window);
+            if(!window.equals(parent_window)){
+                driver.switchTo().window(window);
+                driver.findElement(By.xpath("//*[@id='container']/div/div[3]/div[1]/div[1]/div[2]/div/ul/li[2]/form/button")).click();
+                print("Buy Now button is clicked");
+            }
+        }
+        driver.close();
+        driver.switchTo().window(parent_window);
+        driver.findElement(By.xpath("//*[@id='container']/div/div[1]/div[1]/div[2]/div[3]/div/div/div/a")).click();
+    }
+    void multipleWindowPractice_Madhuris_version() throws InterruptedException {
+        // launch website
+        launchBrowser("chrome");
+        openURL("https://www.flipkart.com/");
+        //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        WebElement closeBtn = driver.findElement(By.xpath("/html/body/div[2]/div/div/button"));
+        if (closeBtn.isDisplayed()) {
+            closeBtn.click();
+        }
+
+// click on mobile category and click on samsung
+        WebElement electronics = driver.findElement(By.xpath("//*[@id='container']/div/div[2]/div/div/span[1]"));
+        Actions action = new Actions(driver);
+        action.moveToElement(electronics).perform(); // mouse hovering over Electronics dropdown
+        click(By.linkText("Samsung")); // clicking on Samsung
+
+// start logic for ---search for "Samsung Mobile under ₹15K" and click on it
+        String parent_window = driver.getWindowHandle();
+// clicking on View All button for phones under 15K
+        List<WebElement> viewAllButtons = driver
+                .findElements(By.xpath("//*[@id='container']/div/div[3]/div[3]/div/div/div[1]/div[2]/a"));
+        List<WebElement> priceSections = driver
+                .findElements(By.xpath("//*[@id='container']/div/div[3]/div[3]/div/div/div[1]/div[1]/h2"));
+        for (int i = 0; i < priceSections.size(); i++) {
+            String curentPriceSection = priceSections.get(i).getText();
+            if (curentPriceSection.contains("Samsung Mobile under ₹15K")) {
+                viewAllButtons.get(i).click();
+                break;
+            }
+        }
+// end logic for --- search for "Samsung Mobile under ₹15K" and click on it
+
+// selecting phone from 2nd page from pagination -- looping multiple pages to
+// find an item
+        List<WebElement> allPaginationPages = driver
+                .findElements(By.xpath("//*[@id='container']/div/div[3]/div[2]/div/div[2]/div[26]/div/div/nav/a"));
+        System.out.println("count of all pages in pagination is : " + allPaginationPages.size());
+
+        for (WebElement pageWebElement : allPaginationPages) {
+            List<WebElement> countMobilePhones = driver.findElements(By
+                    .xpath("//*[@id='container']/div/div[3]/div[2]/div/div[2]/div/div/div/div/a/div[2]/div[1]/div[1]"));
+            System.out.println("number of Mobiles in current page : " + countMobilePhones.size());
+            boolean flag = false;
+            String findMobile = "Samsung Galaxy A20 (Gold, 32 GB)";// "Samsung Galaxy A20 (Red, 32 GB)"; // "Samsung Galaxy A50s (Prism Crush Violet, 128 GB)"
+            for (WebElement webElement : countMobilePhones) {
+                if (webElement.getText().equals(findMobile)) {
+                    System.out.println("Found before clciked on Mob iteam");
+                    webElement.click();
+                    System.out.println("Found and clciked on Mob iteam");
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) {
+                break;
+            }
+            System.out.println("clicking on Next button for page: " + pageWebElement.getText());
+            pageWebElement.click();
+            Thread.sleep(3500);
+            System.out.println("clicked");
+        }
+
+// after opening a page with required mobile
+        Thread.sleep(3500);
+        Set<String> child_windows = driver.getWindowHandles();
+        for (String window : child_windows) {
+            if (!window.equals(parent_window)) {
+                driver.switchTo().window(window);
+                driver.findElement(
+// By.xpath("//*[@id='container']/div/div[3]/div[1]/div[1]/div[2]/div/ul/li[2]/form/button")).click(); // click on Buy Now button
+                        By.xpath("//*[@id=\"container\"]/div/div[3]/div[1]/div[1]/div[2]/div/ul/li[1]/button")).click(); // click on Add to card button
+                Thread.sleep(3500);
+                System.out.println("Add to Cart - button is clicked");
+            }
+        }
+        driver.close();
+        driver.switchTo().window(parent_window);
+        driver.findElement(By.xpath("//*[@id='container']/div/div[1]/div[1]/div[2]/div[3]/div/div/div/a")).click();
+        driver.navigate().refresh();
+    }
+    void webTableAngularJS() throws InterruptedException {
+        launchBrowser("chrome");
+        openURL("http://demo.automationtesting.in/WebTable.html");
+        List<WebElement> rows=driver.findElements(By.xpath("//*[@role='grid']/div[2]/div/div"));
+        System.out.println(rows.size());
+
+        List<WebElement> columns=rows.get(0).findElements(By.xpath("//*[@role='gridcell']/div"));
+    //    List<WebElement> columns=driver.findElements(By.xpath("//*[@ui-grid-one-bind-id-grid='rowRenderIndex + '-' + col.uid + '-cell'']"));
+        int aa=columns.size();
+        System.out.println(aa);
+
+/*        for(int i=0;i<=rows.size()-1;i++){
+            List<WebElement> columns=rows.get(i).findElements(By.xpath("//*[@ng-repeat='(colRenderIndex, col) in colContainer.renderedColumns track by col.uid']"));
+            for(int x=0;x<=columns.size();x++){
+                String cellValue=columns.get(x).getText();
+                print(cellValue);
+            }
+        }*/
+
+
+        //*[@id="1609857203210-grid-container"]/div[2]/div/div[1]
+
+        //*[@id="1609857203210-0-uiGrid-0005-cell"]/div
+        //*[@id="1609857203210-0-uiGrid-0006-cell"]/div
+
+
+
+    /*    String aa=rows.getText();
+        print(aa);*/
+
+        /*
+
+
+      /* // WebElement table_body=driver.findElement(By.cssSelector(".ui-grid-viewport"));
+      List<WebElement> table_rows=table_body.findElements(By.tagName("div"));
+        //int row_count=table_rows.size();
+        System.out.println(table_rows.size());
+        for(int i=0;i<table_rows.size();i++){
+            String current_row=table_rows.get(i).getText();
+            //int rows_count=row_count.size();
+            print(current_row);
+            print("");
+        }*/
+      //  closeApp();
+    }
+    void readingValuesFromExcel() throws IOException {
+        File f=new File("/Users/sirazhutdinmingazhev/Desktop/SeleniumWorkFolder/ExcelFileForSelenium.xlsx"); // Create an object of File class to open xlsx file
+
+        FileInputStream fi=new FileInputStream(f); //Create an object of FileInputStream class to read excel file // or enter excel file path instead of (f)
+
+        XSSFWorkbook wb=new XSSFWorkbook(fi); // creating object for workbook
+
+        XSSFSheet sh=wb.getSheet("Sheet1"); // reading sheet
+        int row_count=sh.getLastRowNum(); // getting the number of rows on current sheet
+        System.out.println(row_count+" rows");
+
+        XSSFRow row=sh.getRow(0); // reading row
+        int column_count=row.getLastCellNum();
+        System.out.println(column_count+" columns");
+
+/*        XSSFCell cell=row.getCell(1); // reading cell
+        System.out.println(cell);*/
+
+/*        cell.getStringCellValue();
+        print(cell.getStringCellValue());*/
+
+        for(int i=0;i<=row_count;i++){
+            System.out.println(i+1+" is current row");
+            XSSFRow curentRow = sh.getRow(i);
+            for(int x=0;x<=column_count-1;x++){
+                XSSFCell cellValue=curentRow.getCell(x);
+                System.out.println(cellValue);
+            }
+        }
+
+        wb.close();
+        fi.close();
+    }
+    void createSheet() throws IOException, InterruptedException {
+        File f=new File("/Users/sirazhutdinmingazhev/Desktop/SeleniumWorkFolder/ExcelFileForSelenium.xlsx");
+        FileInputStream fis=new FileInputStream(f);
+        XSSFWorkbook workbook=new XSSFWorkbook(fis);
+        int sh=workbook.getNumberOfSheets();
+        System.out.println(sh);
+
+        // retreived all sheet names and stored in an array
+        String sheet_names[]=new String[sh];
+        for(int i=0;i<sheet_names.length;i++){
+            sheet_names[i]=workbook.getSheetAt(i).getSheetName();
+        }
+        System.out.println(sheet_names.length);
+
+        // just checking all sheet names in an array
+        for(int i=0;i<sheet_names.length;i++){
+            print(sheet_names[i]);
+        }
+
+        // this string variable will hold our desired/required sheet name
+        String desiredSheet="New_Sheet"; // sheet name to add/check if existing
+
+        // checking if desiredSheet is existing in workbook true/false
+        boolean dd= Arrays.stream(sheet_names).anyMatch(desiredSheet::equals);
+        System.out.println(dd);
+
+        // writting values into sheet and creating new sheet if it doesn't exist
+        if(dd){
+            print("sheet exists, add logic to open and write to it");
+            workbook.getSheet(desiredSheet).createRow(5).createCell(2).setCellValue("sheet already existed in workbook");
+        }else{
+            print("sheet doesn't exist, add logic to create new sheet and write to it");
+            workbook.createSheet(desiredSheet).createRow(3).createCell(2).setCellValue("checked if sheet existed and wrote values to excel");
+        }
+
+        // saving entered values in excel file
+        FileOutputStream fo=new FileOutputStream(f);
+        workbook.write(fo); // save data in excel
+
+        fo.close();
+        workbook.close();
+        fis.close();
+    }
+    void readWebTable_writeToExcel() throws IOException {
+        launchBrowser("chrome");
+        openURL("https://www.techlistic.com/p/demo-selenium-practice.html");
+        WebElement table_body=driver.findElement(By.xpath("//*[@id='post-body-5867683659713562481']/div/div[1]/table/tbody"));
+        List<WebElement> table_rows=table_body.findElements(By.tagName("tr"));
+
+        File f=new File("/Users/sirazhutdinmingazhev/Desktop/SeleniumWorkFolder/ExcelFileForSelenium.xlsx"); // Create an object of File class to open xlsx file
+        FileInputStream fi=new FileInputStream(f); //Create an object of FileInputStream class to read excel file // or enter excel file path instead of (f)
+        XSSFWorkbook wb=new XSSFWorkbook(fi); // creating object for workbook
+        XSSFSheet sh=wb.getSheet("Sheet3"); // reading sheet
+
+        for(int row=0;row<table_rows.size();row++){
+            List<WebElement> table_columns=table_rows.get(row).findElements(By.tagName("td"));
+            for(int col=0;col<table_columns.size();col++){
+                String values=table_columns.get(col).getText();
+                print(values);
+                //wb.getSheet("Sheet3").createRow(row).createCell(col).setCellValue(values);
+                if(sh.getRow(row)!=null){
+                    sh.getRow(row).createCell(col).setCellValue(values);
+                }else{
+                    sh.createRow(row).createCell(col).setCellValue(values);
+                }
+
+            }
+        }
+        FileOutputStream fos=new FileOutputStream(f);
+        wb.write(fos);
+
+        fos.close();
+        wb.close();
+        fi.close();
+
+        closeApp();
+    }
+    void readFromDropdown_writeTiExcel() throws InterruptedException, IOException {
+        File f=new File("/Users/sirazhutdinmingazhev/Desktop/SeleniumWorkFolder/ExcelFileForSelenium.xlsx"); // Create an object of File class to open xlsx file
+        FileInputStream fi=new FileInputStream(f); //Create an object of FileInputStream class to read excel file // or enter excel file path instead of (f)
+        XSSFWorkbook wb=new XSSFWorkbook(fi); // creating object for workbook
+        XSSFSheet sh=wb.getSheet("Sheet3"); // reading sheet
+        launchBrowser("chrome");
+        openURL("https://candidate.psiexams.com/catalog/displayagencylicenses.jsp?catalogID=334");
+        waitTime(3000);
+        List<WebElement> sponsorname=driver.findElements(By.id("c0"));
+        for(int i=0;i<sponsorname.size();i++){
+            String values=sponsorname.get(i).getText();
+            print(values);
+            sh.createRow(i).createCell(1).setCellValue(values);
+        }
+        FileOutputStream fos=new FileOutputStream(f);
+        wb.write(fos);
+
+        fos.close();
+        wb.close();
+        fi.close();
+
+        closeApp();
+    }
+    void exceptionHandling() throws IOException {
+        File f=new File("");
+        FileInputStream fis=new FileInputStream(f);
+        XSSFWorkbook wb=new XSSFWorkbook(fis);
+
+
+    }
+    void rediffMoneyWebTable() throws IOException {
+        File f=new File("/Users/sirazhutdinmingazhev/Desktop/SeleniumWorkFolder/ExcelFileForSelenium.xlsx"); // Create an object of File class to open xlsx file
+        FileInputStream fi=new FileInputStream(f); //Create an object of FileInputStream class to read excel file // or enter excel file path instead of (f)
+        XSSFWorkbook wb=new XSSFWorkbook(fi); // creating object for workbook
+       // XSSFSheet sh=wb.getSheet("Sheet2"); // reading sheet
+        launchBrowser("chrome");
+        openURL("https://money.rediff.com/gainers");
+        WebElement thead=driver.findElement(By.xpath("//*[@id='leftcontainer']/table/thead"));
+        List<WebElement> head_tableRow=thead.findElements(By.tagName("tr"));
+        for(int i=0;i<head_tableRow.size();i++){
+            WebElement cols=driver.findElement(By.xpath("//*[@id='leftcontainer']/table/thead/tr"));
+            List<WebElement> head_tableCol=cols.findElements(By.tagName("th"));
+            for(int j=0;j<head_tableCol.size();j++){
+                String values=head_tableCol.get(j).getText();
+                System.out.println(values);
+                if(wb.getSheet("Sheet4").getRow(i)!=null){
+                    wb.getSheet("Sheet4").getRow(i).createCell(j).setCellValue(values);
+                }else {
+                    wb.getSheet("Sheet4").createRow(i).createCell(j).setCellValue(values);
+                }
+            }
+        }
+        WebElement tbody=driver.findElement(By.xpath("//*[@id='leftcontainer']/table/tbody"));
+        List<WebElement> tRow=tbody.findElements(By.tagName("tr"));
+        for(int i=1; i<=5;i++){
+            WebElement tableRows=driver.findElement(By.xpath("//*[@id='leftcontainer']/table/tbody/tr"));
+            List<WebElement> tCol=tableRows.findElements(By.tagName("td"));
+            for(int j=0;j<tCol.size();j++){
+                String tbodyValues=tCol.get(j).getText();
+                System.out.println(tbodyValues);
+                if(wb.getSheet("Sheet4").getRow(i)!=null){
+                    wb.getSheet("Sheet4").getRow(i).createCell(j).setCellValue(tbodyValues);
+                }else{
+                    wb.getSheet("Sheet4").createRow(i).createCell(j).setCellValue(tbodyValues);
+                }
+            }
+        }
+
+        FileOutputStream fos=new FileOutputStream(f);
+        wb.write(fos);
+
+        fos.close();
+        wb.close();
+        fi.close();
+    }
+    void removeDisableEnableAttribute_JS() throws InterruptedException {
+
+        // Spicejet.com  :  remove attribute readonly and type the date
+        launchBrowser("chrome");
+        openURL("https://www.spicejet.com/");
+        WebElement elementFromDate = driver.findElement(By.id("ctl00_mainContent_view_date1"));
+        ((JavascriptExecutor)driver).executeScript ("document.getElementById('ctl00_mainContent_view_date1').removeAttribute('readonly',0);");
+        elementFromDate.clear();
+        elementFromDate.sendKeys("15/01");
+        Thread.sleep(5000);
+        closeApp();
+
+        waitTime(2000);
+
+        //http://only-testing-blog.blogspot.com/  :  scroll down to Attributes section enable last name textbox and unhide hidden textbox
+        //scrolling down to object
+        launchBrowser("chrome");
+        openURL("http://only-testing-blog.blogspot.com/");
+        javascriptExecutor(By.xpath("//*[@id='Blog1']/div[1]/div[11]/div/div/div/h3/a"), "arguments[0].scrollIntoView(true);");
+        // changing disabled flag to enabled
+        WebElement lastName=driver.findElement(By.xpath("//*[@id='post-body-4105674242499183386']/div/form/input[2]"));
+        js = (JavascriptExecutor)driver;
+        js.executeScript("arguments[0].removeAttribute('disabled');", lastName);
+        driver.findElement(By.xpath("//*[@id='post-body-4105674242499183386']/div/form/input[2]")).sendKeys("enabled");
+        WebElement hiddenTextbox=driver.findElement(By.xpath("//*[@id='post-body-4105674242499183386']/div/form/input[3]"));
+        js.executeScript("document.getElementsByName('Hidden')[0].setAttribute('type', 'text');");
+        hiddenTextbox.sendKeys("not hidden anymore");
+        waitTime(2000);
+        closeApp();
+
+        waitTime(2000);
+
+        // flipkart.com scrolling down to nikon camera link, click on it and verify the tittle text on newly open web-page
+        launchBrowser("chrome");
+        openURL("https://www.flipkart.com/");
+        javascriptExecutor(By.xpath("//*[@id='container']/div/footer/div/div[1]/div/div[1]/span"),"arguments[0].scrollIntoView(true);");
+        boolean closePopupBtn=driver.findElement(By.xpath("/html/body/div[2]/div/div/button")).isDisplayed();
+        if(closePopupBtn){
+            driver.findElement(By.xpath("/html/body/div[2]/div/div/button")).click();
+        }
+        driver.findElement(By.linkText("Nikon Camera")).click();
+        String tittleText=driver.findElement(By.xpath("//*[@id='container']/div/div[3]/div[2]/div[1]/div[2]/div[1]/div/div/h1")).getText();
+        if(tittleText.equalsIgnoreCase("Nikon Cameras")){
+            System.out.println("tittle text is Nikon Cameras");
+            closeApp();
+        }else{
+            System.out.println("tittle tex is not Nikon Cameras");
+        }
+    }
+
+
+    public static void main(String[] args) throws InterruptedException, AWTException, IOException {
+        System.setProperty("webdriver.chrome.driver","/Users/sirazhutdinmingazhev/Desktop/chromedriverFile/chromedriver");
+//        ChromeDriver driver=new ChromeDriver();
+//        driver.manage().window().maximize(); // maximizing the browser/window
+
+        // Creating object 'homeWorkName' to have access to instance methods that are created outside of main method.
+        HomeWork homeWorkName=new HomeWork();
+
+        // Home Works
+   //     homeWorkName.navigationCommands(); // Home Work 'NavigationCommands'
+   //     homeWorkName.verificationIfExists(); //Home Work 'VerificationIfExists'
+   //     homeWorkName.launchApplicationAndEnterAllFields(); //Home Work 'LaunchApplicationAndEnterAllFields'
+   //     homeWorkName.scanner_Method(); //Home Work 'Scanner_Method'
+   //     homeWorkName.dropDowns(); //Home Work 'DropDowns'
+   //     homeWorkName.polymorphisz(); //Home Work 'Polymorphism'
+   //     homeWorkName.actionsDragDropResizeSortSelect();
+   //     homeWorkName.sikuliUpload_PrintScreen_Alerts();
+   //     homeWorkName.primeNum1to100();
+   //     homeWorkName.implicitExplicitWait();
+   //     homeWorkName.explicitWaitPractice();
+   //     homeWorkName.bookFlightOnSpicejet();
+   //     homeWorkName.autoSuggestion();
+   //     homeWorkName.changeWebpageScrnOnBingDotCom();
+   //     homeWorkName.web_table_practice();
+   //     homeWorkName.multipleWindowPractice();
+   //     homeWorkName.multipleWindowPractice_Madhuris_version();
+   //     homeWorkName.webTableAngularJS();
+   //     homeWorkName.readingValuesFromExcel();
+   //     homeWorkName.createSheet();
+   //     homeWorkName.readWebTable_writeToExcel();
+   //     homeWorkName.readFromDropdown_writeTiExcel();
+   //     homeWorkName.exceptionHandling();
+   //     homeWorkName.rediffMoneyWebTable();
+   //     homeWorkName.removeDisableEnableAttribute_JS();
+
+    }
+}
